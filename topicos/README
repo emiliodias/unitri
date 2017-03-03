@@ -1,0 +1,5 @@
+Autenticação Spring Security
+https://spring.io/guides/gs/securing-web/
+
+Exemplo autenticação JDBC
+https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-secure-jdbc
