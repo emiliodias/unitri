@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>Exemplo Echo WebSocket</title>
+		
+		<script type="text/javascript">
+			
+			var ws = new WebSocket("ws://localhost:8080/echo");
+			
+			ws.onopen = function () {
+				console.log('Info: WebSocket conectado.');
+			};
+			
+			ws.onmessage = function (event) {
+				console.log('Mensagem recebida: ' + event.data);
+			};
+			
+			ws.onclose = function () {
+				
+				console.log('Info: WebSocket desconectado.');
+			};
+			
+			function echo() {
+				if (ws != null) {
+				
+					var mensagem = "Hello World";
+					ws.send(mensagem);
+					
+				} else {
+					alert('WebSocket não conectado');
+				}
+			}
+			
+			
+		</script>
+		
+	</head>
+	
+	<body>
+	
+		<button id="echo" onclick="echo();">Enviar mensagem...</button>
+		
+	</body>
+	
+</html>
