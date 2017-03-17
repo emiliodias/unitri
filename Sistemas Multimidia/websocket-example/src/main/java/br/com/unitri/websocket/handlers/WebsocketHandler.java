@@ -1,32 +1,42 @@
 package br.com.unitri.websocket.handlers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class WebsocketHandler extends TextWebSocketHandler {
-
+	
+	public static Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
+ 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		
-		System.out.println("Conexão encerrada...");
+		sessions.remove(session.getId());
 		
 	}
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 	
-		System.out.println("Conexão estabelecida...");
+		sessions.put(session.getId(), session);
 		
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		System.out.println(message.getPayload());
+		Set<String> sessionsIds = sessions.keySet();
 		
-		session.sendMessage(new TextMessage("Echo reply " + message.getPayload()));
+		for(String id : sessionsIds) {
+			
+			sessions.get(id).sendMessage(new TextMessage(message.getPayload()));
+			
+		}
 		
 	}
 	
